@@ -1,8 +1,9 @@
 import './App.css'
-import Login from './components/login';
+import Body from './components/Body';
 import Signup from './components/signup'
 import {BrowserRouter, Routes , Route, Navigate} from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
+import OtpUI from './components/VerifyOtp';
 function App() {
  
   return(
@@ -11,8 +12,12 @@ function App() {
    
       <Routes>
      
-         <Route path = '/signup' element={<Signup/>}  />
-          <Route path = '/login' element={<Login/>}  />
+         <Route path = '/signup' element={<Signup mode = 'signup'/>}  />
+          <Route path = '/login' element={<Signup mode = 'login'/>}  />
+              <Route path = '/verifyotp' element={<OtpUI/>}  />
+          <Route path = '/' element={<Body/>}>
+
+          </Route>  
 
       </Routes>
 

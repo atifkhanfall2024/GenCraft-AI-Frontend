@@ -4,14 +4,21 @@ import Base_Url from "../utils/constant";
 import {toast} from 'react-toastify'
 import {ClipLoader} from 'react-spinners'
 import { useNavigate } from "react-router-dom";
-export default function Signup() {
+import { useEffect } from "react";
+export default function Signup({mode}) {
 
     const [isemail , setisemail] = useState('')
     const [Userpassword ,setpassword] = useState('')
     const [name , setname] = useState('')
     const [Loading , setLoading] = useState(false)
     const [Error , setError] = useState()
+    const [Toggle ,  setToggle ] = useState(mode=='signup')
     const navigate = useNavigate()
+
+//       useEffect(() => {
+//     if (Toggle) navigate("/signup");
+//     else navigate("/login");
+//   }, [Toggle]);
 
     const HandleSignup = async(e)=>{
          
@@ -25,7 +32,7 @@ export default function Signup() {
     } , {withCredentials:true})
 
     console.log(res?.data);
-   navigate('/Login')
+   navigate('/verifyotp')
     setLoading(false)
     toast.success('Check Email And Verify Otp')
   
@@ -38,15 +45,38 @@ export default function Signup() {
 
     }
 
+    const HandleLogin = async(e)=>{
+        e.preventDefault()
+        try{
+
+            setLoading(true)
+            const res = await axios.post(Base_Url+'/Auth/Login' , {
+                email:isemail ,
+                Userpassword
+            } , {withCredentials:true})
+
+            console.log(res?.data);
+            toast.success('Login Success....')
+            navigate('/')
+            setLoading(false)
+
+        }catch(e){
+          setLoading(false)
+          console.log(e?.response?.data?.message || e?.message);
+          toast.error(e?.response?.data?.message || e?.message)
+          setError(e?.response?.data?.message || e?.message)
+        }
+    }
+
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-600">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
         
-        <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">{!Toggle ? 'Login Account' :  'Create Account'}</h2>
 
         <form className="space-y-5">
 
-          <div>
+          {Toggle &&<div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
               Full Name
             </label>
@@ -57,7 +87,7 @@ export default function Signup() {
               placeholder="Enter your full name"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </div>}
 
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -87,10 +117,13 @@ export default function Signup() {
            <p className="text-red-400" >{Error}</p>
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition" disabled={Loading}   onClick={HandleSignup}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition" disabled={Loading}   onClick={Toggle ? HandleSignup : HandleLogin}
           >
-            {Loading ? <ClipLoader size={30} color="white" /> : "Send Otp"}
+            {Loading ? <ClipLoader size={30} color="white" /> : (Toggle? "Send Otp":'Login Account')}
           </button>
+          <p className="text-sm text-center mt-3">
+ {Toggle?' Already have an account?':'Donot have account?'} <a href={Toggle?"/signup":"/login"} className="text-blue-600 hover:underline cursor-pointer" onClick={()=>setToggle(prev=>!prev)}>{!Toggle ? 'Sign up ' : 'Login'}</a>
+</p>
 
         </form>
       </div>
