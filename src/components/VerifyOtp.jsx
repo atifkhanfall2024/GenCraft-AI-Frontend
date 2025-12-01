@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import Base_Url from "../utils/constant";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 export default function OtpUI() {
   const [d1, setD1] = useState("");
@@ -10,6 +12,8 @@ export default function OtpUI() {
   const [d4, setD4] = useState("");
   const [d5, setD5] = useState("");
   const [d6, setD6] = useState("");
+  const [Loading , setLoading]=  useState(false)
+  const [Error , setError] = useState()
   const navigate = useNavigate()
 
 
@@ -19,6 +23,7 @@ export default function OtpUI() {
 
 
        try{
+        setLoading(true)
         const otp = d1+d2+d3+d4+d5+d6
       const res = await axios.post(Base_Url+'/otp/verify' ,{
   otp
@@ -27,11 +32,18 @@ export default function OtpUI() {
       )
 
       console.log(res?.data);
-      navigate('/signup')
+      toast.success('Otp verify success ')
+      setLoading(false)
+      navigate('/login')
       
     }
-      catch(e){
-           console.log(e?.message);
+      catch(err){
+        
+             setLoading(false)
+               setError(err?.response?.data?.message || err.message)
+                   toast.error(err?.response?.data?.message)
+        console.log(err?.response?.data?.message || err.message);
+        
        }
   }
 
@@ -47,8 +59,8 @@ export default function OtpUI() {
         <input value={d5} onChange={(e) => setD5(e.target.value)} maxLength={1} className="w-12 h-12 text-center border rounded" />
         <input value={d6} onChange={(e) => setD6(e.target.value)} maxLength={1} className="w-12 h-12 text-center border rounded" />
       </div>
-
-      <button className="px-6 py-2 bg-blue-600 text-white rounded" onClick={HandleVerify}>Verify</button>
+         <p className="text-red-400" >{Error}</p>
+      <button className="px-6 py-2 bg-blue-600 text-white rounded" disabled={Loading} onClick={HandleVerify}>{Loading ? <ClipLoader size={30} color="white"/>:'Verify OTP'}</button>
     </div>
   );
 }
