@@ -5,6 +5,10 @@ import {toast} from 'react-toastify'
 import {ClipLoader} from 'react-spinners'
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { auth , provider } from "../utils/Firebase";
+import { signInWithPopup } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { AddUsers } from "../Redux/UserSlice";
 
 export default function Signup() {
 
@@ -13,6 +17,7 @@ export default function Signup() {
     const [name , setname] = useState('')
     const [Loading , setLoading] = useState(false)
     const [Error , setError] = useState()
+    const dispatch = useDispatch()
   
     const navigate = useNavigate()
 
@@ -46,6 +51,51 @@ export default function Signup() {
 
     }
 
+        // handle with google
+    
+          const HandleWithGoogle = async(e)=>{
+                   e.preventDefault()
+    
+                   try{
+    
+    setLoading(true)
+                  const response = await signInWithPopup(auth , provider)
+                           if (!response?.user) {
+                  throw new Error("Google sign-in failed. No user returned.");
+                }
+                   console.log(response);
+                let user =  response?.user
+                let fullName = user?.displayName
+                let email = user?.email
+                let photoUrl = user?.photoURL
+    
+             
+    
+    
+    
+                // calling google auth api
+    
+                const res = await axios.post(Base_Url+'/Signup/Google' , {
+                  fullName ,
+                  email ,
+                  photoUrl ,
+                  
+                } , {withCredentials:true})
+                  
+                  toast.success('Signup Success With Google')
+                    dispatch(AddUsers(res?.data))
+                   setLoading(false)
+                   navigate('/feed')
+                 
+                   }catch(e){
+                      setLoading(false)
+                    console.log(e?.response?.data?.message || e?.message);
+                    setError(e?.response?.data?.message || e?.message)
+                    toast.error(e?.response?.data?.message || e?.message)
+                  
+                   }
+    
+          }
  
 
   return (
@@ -101,6 +151,18 @@ export default function Signup() {
           >
             {Loading ? <ClipLoader size={30} color="white" /> :"Send Otp"}
           </button>
+
+                    <p className="text-center">or</p>
+        <div class="flex justify-center">
+  <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 -translate-y-[40%] rounded-lg shadow-sm hover:bg-gray-100"  disabled={Loading} onClick={HandleWithGoogle}>
+    <img 
+      src="https://www.gstatic.com/images/branding/product/1x/gsa_64dp.png"
+      alt="Google Logo"
+      class="w-5 h-5"
+    />
+    <span class="text-gray-700 font-medium">{Loading?<ClipLoader size={30} color="black"/>:'Continue with Google'}</span>
+  </button>
+</div>
           <p className="text-sm text-center mt-3">
   Already have an account?<a  className="text-blue-600 hover:underline cursor-pointer"> <Link to={'/login'}>Login</Link> </a>
 </p>
