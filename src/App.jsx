@@ -8,6 +8,8 @@ import Login from './components/Login';
 import Feed from './components/Feed';
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { RemoveUsers } from './Redux/UserSlice';
+import Profile from './components/profile';
+import UpdateProfile from './components/updateProfile';
 
 function App() {
  
@@ -31,6 +33,8 @@ function App() {
           <Route path = '/' element={<Body/>}>
              
            <Route path='/feed' element={<Feed/>}/>
+           <Route path='/user/profile' element={<Profile/>} />
+              <Route path='/update/profile' element={<UpdateProfile/>} />
           
          
           </Route>  
