@@ -31,6 +31,7 @@ function App() {
           <Route path = '/' element={<Body/>}>
              
            <Route path='/feed' element={<Feed/>}/>
+          
          
           </Route>  
 

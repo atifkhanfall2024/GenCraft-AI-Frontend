@@ -1,10 +1,11 @@
 import axios from "axios"
 import Base_Url from "../utils/constant"
-import { useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Feed from "./Feed"
 import { useDispatch } from "react-redux"
 import { AddUsers, RemoveUsers } from "../Redux/UserSlice"
+import Header from "./Header"
 
 const Body = ()=>{
 
@@ -36,7 +37,10 @@ const Body = ()=>{
     } ,[])
 
     return(
-      <Feed/>
+     <>
+      <Header/>
+      <Outlet/>
+     </>
     )
 }
 
