@@ -32,6 +32,8 @@ const Profile = ()=>{
     {user && user?.message?.fullName}
     </h2>
 
+     <label className="text-gray-700 font-medium"> {user && user?.message?.description}</label>
+
     {/* Email (Not Editable) */}
     <p className="mt-1 text-gray-500 text-sm">
       {user && user?.message?.email}
@@ -44,7 +46,7 @@ const Profile = ()=>{
 
    <div className="flex justify-between text-gray-700 font-medium">
   <span>Phone:</span>
-  <span>+92-300-1234567</span>
+  <span>{ user && user?.message?.phoneNumber}</span>
 </div>
 
 
