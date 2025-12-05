@@ -1,4 +1,8 @@
+import { supabase } from "../utils/SupaBaseClient"
 const UpdateProfile = ()=>{
+
+
+
     return(
         <div className="w-full flex justify-center px-4 py-10">
   <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
@@ -60,7 +64,7 @@ const UpdateProfile = ()=>{
 
     {/* Submit Button */}
     <button
-      className="mt-6 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition"
+      className="mt-6 w-full py-2 bg-slate-900 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition"
     >
       Save Changes
     </button>
