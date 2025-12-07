@@ -33,7 +33,7 @@ const Header = ()=>{
     return(
       <header className="w-full fixed bg-slate-900 text-white py-4 shadow-lg">
   <div className="max-w-7xl mx-auto  flex items-center justify-between px-6">
-    <h1 className="text-2xl font-bold tracking-wide">GENCRAT-AI</h1>
+    <Link to={'/feed'} ><h1 className="text-2xl font-bold tracking-wide">GENFUSION-AI</h1></Link>
 
     <div className="flex items-center gap-4">
       <span className="text-lg font-medium">{user?.message?.fullName}</span>

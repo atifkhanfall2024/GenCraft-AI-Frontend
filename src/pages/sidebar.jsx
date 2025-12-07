@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Logo from "../assets/GenFusion.png";
+import Logo from '../assets/GenFusion .png'
 import { users } from "../dummy/dummydata";
 import moment from 'moment'
 export default function Sidebar() {
@@ -77,12 +77,7 @@ export default function Sidebar() {
           <p className="text-gray-400 text-xs">Purchase credits to use GenFusion</p>
         </div>
 
-        <div className="flex justify-between items-center border border-gray-700 p-3 rounded-lg">
-          <span>Dark Mode</span>
-          <div className="w-10 h-5 bg-purple-600 rounded-full flex items-center p-1">
-            <div className="w-4 h-4 bg-white rounded-full translate-x-5"></div>
-          </div>
-        </div>
+    
       </div>
     </div>
   );

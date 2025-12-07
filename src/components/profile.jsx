@@ -21,7 +21,7 @@ const Profile = ()=>{
     }
 
     return(
-       <div className="w-full flex justify-center px-4 py-[12%]">
+       <div className="w-full flex justify-center px-4 py-[4%]">
       
   <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-sm flex flex-col items-center">
   <Link to={'/feed'}><FaArrowLeft className="-translate-x-[580%] text-2xl" /></Link>
