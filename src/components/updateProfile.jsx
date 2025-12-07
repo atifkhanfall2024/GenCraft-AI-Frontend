@@ -2,22 +2,23 @@ import { useState } from "react";
 import { supabase } from "../utils/SupaBaseClient";
 import axios from "axios";
 import Base_Url from "../utils/constant";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddUsers } from "../Redux/UserSlice";
 
 const UpdateProfile = () => {
+  const user = useSelector(store=>store?.user)
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("/your-profile.jpg"); // default profile image
-  const [fullName, setFullName] = useState("Muhammad Atif Khan");
-  const [phone, setPhone] = useState("+92-300-1234567");
+  const [url, setUrl] = useState(user?.message?.photoUrl); 
+  const [fullName, setFullName] = useState(user?.message?.fullName);
+  const [phone, setPhone] = useState(user?.message?.phoneNumber);
   const [loading, setLoading] = useState(false);
-  const [description , setDescription] = useState('')
+  const [description , setDescription] = useState(user?.message?.description)
   const dispatch= useDispatch()
   const navigate = useNavigate()
 
-
-  console.log(url);
+  
+  //console.log(url);
   // Handle file selection & upload
   const handleFileChange = async (e) => {
     if (!e.target.files.length) return;
@@ -25,12 +26,13 @@ const UpdateProfile = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
+    // filename will generate unique ness
     const fileName = `${Date.now()}_${selectedFile.name}`;
     setLoading(true);
 
     // Upload file to Supabase storage
     const { data, error } = await supabase.storage
-      .from("images") // your bucket name
+      .from("images") 
       .upload(fileName, selectedFile);
 
     if (error) {
@@ -68,7 +70,7 @@ const UpdateProfile = () => {
         } , {withCredentials:true})
 
         dispatch(AddUsers(res?.data))
-        navigate('/feed')
+        navigate('/user/profile')
 
 
      }catch(e){

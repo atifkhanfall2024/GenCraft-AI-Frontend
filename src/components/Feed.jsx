@@ -1,8 +1,13 @@
+import Sidebar from "../pages/sidebar";
 const Feed = ()=>{
+console.log("Feed Rendered");
 
-    return(
-        <h1>Feed Page</h1>
-    )
+ return (
+  <div>
+   <Sidebar/>
+  </div>
+);
+
 }
 
 export default Feed

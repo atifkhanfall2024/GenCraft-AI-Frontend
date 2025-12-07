@@ -31,7 +31,7 @@ function App() {
           <Route path = '/login' element={user ?  <Navigate to={'/feed'} />: <Login />}  />
               <Route path = '/verifyotp' element={user ?  <Navigate to={'/feed'} />:<OtpUI/>}  />
           <Route path = '/' element={<Body/>}>
-             
+           
            <Route path='/feed' element={<Feed/>}/>
            <Route path='/user/profile' element={<Profile/>} />
               <Route path='/update/profile' element={<UpdateProfile/>} />

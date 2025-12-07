@@ -2,7 +2,7 @@ import axios from "axios"
 import Base_Url from "../utils/constant"
 import { Outlet, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import Feed from "./Feed"
+
 import { useDispatch } from "react-redux"
 import { AddUsers, RemoveUsers } from "../Redux/UserSlice"
 import Header from "./Header"
@@ -39,7 +39,9 @@ const Body = ()=>{
     return(
      <>
       <Header/>
-      <Outlet/>
+      <div className="pt-15">   {/* FIX: push content below header */}
+        <Outlet />
+      </div>
      </>
     )
 }
