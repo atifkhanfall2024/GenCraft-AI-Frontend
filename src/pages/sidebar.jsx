@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import Logo from '../assets/GenFusion .png'
 import { users } from "../dummy/dummydata";
 import moment from 'moment'
+import { useNavigate } from "react-router-dom";
+import { CiImageOn } from "react-icons/ci";
+import { SiBasicattentiontoken } from "react-icons/si";
 export default function Sidebar() {
   const [chats, setChats] = useState([]);
   const [search, setSearch] = useState('');
   const [SelectedChats , setSelectedChats] = useState([])
+  const navigate = useNavigate()
+
+
+
 
   useEffect(() => {
     setChats(users);
@@ -22,7 +29,7 @@ export default function Sidebar() {
           <div className="w-9 h-9 rounded-xl overflow-hidden bg-[#222] flex items-center justify-center">
             <img src={Logo} alt="logo" className="w-full h-full object-cover" />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col cursor-pointer" onClick={()=>navigate('/feed')}>
             <h1 className="text-xl font-semibold ">GenFusion</h1>
             <p>Intellegant ai assistant</p>
           </div>
@@ -68,14 +75,31 @@ export default function Sidebar() {
 
       {/* Bottom Section - fixed at bottom */}
       <div className="space-y-4">
-        <button className="w-full border border-gray-700 hover:bg-[#222] transition py-2 rounded-lg">
-          Community Images
-        </button>
+     <button
+  className="w-full border border-gray-700 hover:bg-[#222] transition py-2 px-3 rounded-lg cursor-pointer flex items-center gap-3 text-gray-200"
+  onClick={() => navigate('/community')}
+>
+  <CiImageOn className="text-xl" />
+  <span className="text-sm font-medium">Community Images</span>
+</button>
 
-        <div className="w-full border border-gray-700 p-3 rounded-lg text-sm">
-          Credits: <span className="font-semibold">20</span>
-          <p className="text-gray-400 text-xs">Purchase credits to use GenFusion</p>
-        </div>
+
+      <div
+  className="w-full border border-gray-700 p-3 rounded-lg cursor-pointer bg-transparent hover:bg-[#222] transition"
+  onClick={() => navigate('/credits')}
+>
+  <div className="flex items-center gap-2">
+    <SiBasicattentiontoken className="text-lg text-gray-200" />
+    <span className="text-sm text-gray-200">
+      Credits: <span className="font-semibold">20</span>
+    </span>
+  </div>
+
+  <p className="text-gray-400 text-xs mt-1 ml-7">
+    Purchase credits to use GenFusion
+  </p>
+</div>
+
 
     
       </div>

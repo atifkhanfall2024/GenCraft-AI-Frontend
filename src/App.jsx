@@ -10,6 +10,8 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 import { RemoveUsers } from './Redux/UserSlice';
 import Profile from './components/profile';
 import UpdateProfile from './components/updateProfile';
+import Community from './pages/community';
+import Credits from './pages/credits';
 
 function App() {
  
@@ -35,6 +37,8 @@ function App() {
            <Route path='/feed' element={<Feed/>}/>
            <Route path='/user/profile' element={<Profile/>} />
               <Route path='/update/profile' element={<UpdateProfile/>} />
+                <Route path='/community' element={<Community/>} />
+                  <Route path='/credits' element={<Credits/>} />
           
          
           </Route>  

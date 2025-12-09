@@ -8,11 +8,11 @@ console.log("Feed Rendered");
 
   {/* Sidebar */}
   <div className="w-[300px] bg-[#0f1624]">
-    <Sidebar />
+
   </div>
 
   {/* Chat Area */}
-  <div className="flex-1">
+  <div className="fixed top-[15%] left-[25%] w-[72%] h-[85%] overflow-none">
     <Chat />
   </div>
 
